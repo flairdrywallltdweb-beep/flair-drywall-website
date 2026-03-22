@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ZoomIn } from 'lucide-react'
+import { X, ZoomIn, Play } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
 import { staggerContainer, fadeInUp } from '@/lib/motionVariants'
 
 const GALLERY_ITEMS = [
-  { id: 1, src: '/Drywall.jpg',      title: 'Drywall Installation', location: 'Alberta, AB', category: 'Drywall' },
-  { id: 2, src: '/drywall-2.jpg',    title: 'Drywall Finishing',    location: 'Alberta, AB', category: 'Drywall' },
-  { id: 3, src: '/Insulation.JPG',   title: 'Insulation Install',   location: 'Alberta, AB', category: 'Insulation' },
-  { id: 4, src: '/Spray-foam.JPG',   title: 'Spray Foam Project',   location: 'Alberta, AB', category: 'Spray Foam' },
-  { id: 5, src: '/Mud_Tapping.jpeg', title: 'Mud Taping Finish',    location: 'Alberta, AB', category: 'Taping' },
-  { id: 6, src: '/Texture.JPG',      title: 'Texture Finishing',    location: 'Alberta, AB', category: 'Texture' },
+  { id: 1, src: '/Drywall.jpg',      title: 'Drywall Installation', location: 'Alberta, AB', category: 'Drywall',    type: 'image' as const },
+  { id: 2, src: '/drywall-2.jpg',    title: 'Drywall Finishing',    location: 'Alberta, AB', category: 'Drywall',    type: 'image' as const },
+  { id: 3, src: '/Insulation.JPG',   title: 'Insulation Install',   location: 'Alberta, AB', category: 'Insulation', type: 'image' as const },
+  { id: 4, src: '/IMG_7762.mp4',     title: 'Our Work in Action',   location: 'Alberta, AB', category: 'Video',      type: 'video' as const },
+  { id: 5, src: '/Spray-foam.JPG',   title: 'Spray Foam Project',   location: 'Alberta, AB', category: 'Spray Foam', type: 'image' as const },
+  { id: 6, src: '/Mud_Tapping.jpeg', title: 'Mud Taping Finish',    location: 'Alberta, AB', category: 'Taping',     type: 'image' as const },
+  { id: 7, src: '/Texture.JPG',      title: 'Texture Finishing',    location: 'Alberta, AB', category: 'Texture',    type: 'image' as const },
 ]
 
 export default function Gallery() {
@@ -75,12 +76,18 @@ export default function Gallery() {
               aria-label={`View project: ${item.title}`}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openLightbox(idx) }}
             >
-              <img src={item.src} alt={item.title} className="gallery__img" loading="lazy" />
+              {item.type === 'video' ? (
+                <video className="gallery__img" muted playsInline preload="metadata">
+                  <source src={item.src} type="video/mp4" />
+                </video>
+              ) : (
+                <img src={item.src} alt={item.title} className="gallery__img" loading="lazy" />
+              )}
 
               {/* Hover overlay */}
               <div className="gallery__overlay">
                 <div className="gallery__overlay-content">
-                  <ZoomIn size={22} />
+                  {item.type === 'video' ? <Play size={22} /> : <ZoomIn size={22} />}
                   <span className="gallery__overlay-title">{item.title}</span>
                   <span className="gallery__overlay-loc">{item.location}</span>
                 </div>
@@ -88,6 +95,13 @@ export default function Gallery() {
 
               {/* Category badge */}
               <span className="gallery__badge">{item.category}</span>
+
+              {/* Play button on video cards */}
+              {item.type === 'video' && (
+                <div className="gallery__play-btn" aria-hidden="true">
+                  <Play size={28} fill="white" />
+                </div>
+              )}
             </motion.div>
           ))}
         </motion.div>
@@ -126,7 +140,19 @@ export default function Gallery() {
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={current.src} alt={current.title} className="gallery__lightbox-img" />
+              {current.type === 'video' ? (
+                <video
+                  className="gallery__lightbox-img"
+                  controls
+                  autoPlay
+                  playsInline
+                  key={current.src}
+                >
+                  <source src={current.src} type="video/mp4" />
+                </video>
+              ) : (
+                <img src={current.src} alt={current.title} className="gallery__lightbox-img" />
+              )}
               <div className="gallery__lightbox-info">
                 <h3>{current.title}</h3>
                 <p>{current.location}</p>
@@ -168,6 +194,27 @@ export default function Gallery() {
           display: block;
         }
         .gallery__card:hover .gallery__img { transform: scale(1.06); }
+        .gallery__play-btn {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          pointer-events: none;
+        }
+        .gallery__play-btn > svg {
+          width: 64px;
+          height: 64px;
+          background: rgba(14,165,233,0.85);
+          border-radius: 50%;
+          padding: 16px;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+          transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .gallery__card:hover .gallery__play-btn > svg {
+          transform: scale(1.12);
+          background: #0EA5E9;
+        }
         .gallery__overlay {
           position: absolute;
           inset: 0;
@@ -237,6 +284,7 @@ export default function Gallery() {
           aspect-ratio: 4/3;
           object-fit: cover;
           display: block;
+          background: #000;
         }
         .gallery__lightbox-info {
           padding: 1.5rem;
