@@ -178,7 +178,7 @@ export default function Hero() {
         }
         .hero__title {
           font-family: var(--font-display);
-          font-size: var(--text-hero);
+          font-size: var(--text-4xl);
           font-weight: 700;
           color: #fff;
           line-height: 1.05;

@@ -8,11 +8,11 @@ const handleScroll = (href: string) => (e: React.MouseEvent) => {
 
 const QUICK_LINKS = [
   { label: 'Home',         href: '#home' },
+  { label: 'About Us',     href: '#whyus' },
   { label: 'Services',     href: '#services' },
   { label: 'Gallery',      href: '#gallery' },
-  { label: 'Why Choose Us',href: '#whyus' },
-  { label: 'Our Process',  href: '#process' },
-  { label: 'Contact',      href: '#contact' },
+  { label: 'Testimonials', href: '#testimonials' },
+  { label: 'Contact Us',   href: '#contact' },
 ]
 
 const SERVICES = [
