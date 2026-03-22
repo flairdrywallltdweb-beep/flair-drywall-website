@@ -25,6 +25,7 @@ export default function Hero() {
           loop
           playsInline
           preload="metadata"
+          poster="/drywall-2.jpg"
         >
           <source src="/IMG_7762.mp4" type="video/mp4" />
         </video>

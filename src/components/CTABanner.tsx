@@ -89,7 +89,7 @@ export default function CTABanner() {
           gap: 0;
         }
         .cta-banner__title {
-          font-size: var(--text-4xl);
+          font-size: clamp(1.85rem, 3.5vw, 2.75rem);
           max-width: 16ch;
           text-align: center;
           margin-inline: auto;

@@ -33,25 +33,24 @@ export default function Footer() {
           {/* Brand column */}
           <div className="footer__brand">
             <a href="#home" onClick={handleScroll('#home')} className="footer__logo-wrap" aria-label="Flair Drywall Ltd — Back to top">
-              <img src="/Logo-removebg-preview.png" alt="Flair Drywall Ltd" width={56} height={56} loading="lazy" />
+              <img src="/Logo-removebg-preview.png" alt="Flair Drywall Ltd" width={225} height={225} loading="lazy" />
             </a>
             <p className="footer__tagline">
               Professional drywall installation, insulation, and finishing services
               across Alberta — quality workmanship on every project.
             </p>
-            <div className="footer__social" aria-label="Social media links">
-              <a
-                href="https://www.tiktok.com/@flairdrywallltd"
-                className="footer__social-link"
-                aria-label="Follow Flair Drywall on TikTok"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.87a8.16 8.16 0 004.77 1.52V6.94a4.85 4.85 0 01-1-.25z"/>
-                </svg>
-              </a>
-            </div>
+            <a
+              href="https://www.tiktok.com/@flairdrywallltd"
+              className="footer__tiktok-btn"
+              aria-label="Follow Flair Drywall on TikTok"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.87a8.16 8.16 0 004.77 1.52V6.94a4.85 4.85 0 01-1-.25z"/>
+              </svg>
+              <span>Follow on TikTok</span>
+            </a>
           </div>
 
           {/* Quick links */}
@@ -115,7 +114,7 @@ export default function Footer() {
         .footer {
           background: var(--color-deep);
           color: var(--color-on-dark);
-          padding-top: clamp(3rem, 6vw, 5rem);
+          padding-top: clamp(0.5rem, 1vw, 1rem);
           position: relative;
           overflow: hidden;
         }
@@ -149,42 +148,64 @@ export default function Footer() {
           z-index: 1;
         }
         @media (min-width: 640px)  { .footer__grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .footer__grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
+        @media (min-width: 1024px) {
+          .footer__grid { grid-template-columns: 2.5fr 1fr 1fr 1.5fr; }
+          .footer__nav,
+          .footer__services,
+          .footer__contact { padding-top: 3.5rem; }
+        }
+        .footer__brand {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
         .footer__logo-wrap {
           display: inline-block;
           margin-bottom: 1rem;
+          margin-top: 0;
         }
         .footer__logo-wrap img {
-          border-radius: var(--radius-md);
           object-fit: contain;
+          width: 120px;
+          height: 120px;
+        }
+        @media (min-width: 640px) {
+          .footer__logo-wrap img { width: 160px; height: 160px; }
+        }
+        @media (min-width: 1024px) {
+          .footer__logo-wrap img { width: 225px; height: 225px; }
         }
         .footer__tagline {
           font-size: var(--text-sm);
           color: var(--color-on-dark-muted);
           line-height: 1.7;
           margin-bottom: 1.5rem;
-          max-width: 30ch;
+          max-width: 34ch;
         }
         .footer__social {
           display: flex;
           gap: 0.75rem;
         }
-        .footer__social-link {
-          width: 44px;
-          height: 44px;
-          border-radius: var(--radius-full);
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.12);
-          display: flex;
+        .footer__tiktok-btn {
+          display: inline-flex;
           align-items: center;
-          justify-content: center;
-          color: var(--color-on-dark-muted);
-          transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
-        }
-        .footer__social-link:hover {
-          background: var(--color-primary);
-          border-color: var(--color-primary);
+          gap: 0.55rem;
+          padding: 0.6rem 1.25rem;
+          background: #000;
           color: #fff;
+          border-radius: var(--radius-full);
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          border: 1.5px solid rgba(255,255,255,0.15);
+          transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
+          white-space: nowrap;
+        }
+        .footer__tiktok-btn:hover {
+          background: #1a1a1a;
+          border-color: rgba(255,255,255,0.35);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
         .footer__heading {
           font-family: var(--font-body);
@@ -216,12 +237,12 @@ export default function Footer() {
         }
         .footer__contact-item {
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           gap: 0.6rem;
           font-size: var(--text-sm);
           color: var(--color-on-dark-muted);
         }
-        .footer__contact-item svg { color: var(--color-accent); flex-shrink: 0; margin-top: 2px; }
+        .footer__contact-item svg { color: var(--color-accent); flex-shrink: 0; }
         .footer__contact-item a { color: var(--color-on-dark-muted); transition: color var(--t-fast); word-break: break-all; }
         .footer__contact-item a:hover { color: var(--color-accent); }
         .footer__cta { font-size: 0.875rem; padding: 0.65rem 1.4rem; }

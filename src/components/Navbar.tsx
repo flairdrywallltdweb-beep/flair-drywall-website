@@ -123,6 +123,7 @@ export default function Navbar() {
 
           {/* CTA */}
           <div className="nav-actions">
+
             <a href="#contact" onClick={handleNavClick('#contact')} className="nav-cta">
               Get Free Quote
             </a>
@@ -283,7 +284,7 @@ export default function Navbar() {
         }
         @media (min-width: 1024px) { .nav-actions { display: flex; } }
 
-        /* ── CTA ── */
+/* ── CTA ── */
         .nav-cta {
           display: inline-flex;
           align-items: center;

@@ -8,16 +8,10 @@ import { Mail, CheckCircle2, AlertCircle, Send, Loader2 } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
 import { slideInLeft, slideInRight } from '@/lib/motionVariants'
 
-// ─── EmailJS Configuration ───────────────────────────────────────────────────
-// TODO: Replace these with real IDs from emailjs.com after client sets up account.
-// Setup steps:
-//  1. Create free account at https://www.emailjs.com
-//  2. Add Gmail (flairdrywallltd62@gmail.com) as email service
-//  3. Create an email template with variables: {{name}}, {{phone}}, {{email}}, {{service}}, {{message}}
-//  4. Copy Service ID, Template ID, and Public Key into the constants below
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'
+// ─── EmailJS Configuration ────────────────────────────────────────────────────
+const EMAILJS_SERVICE_ID  = 'service_j8788je'
+const EMAILJS_TEMPLATE_ID = 'template_n7adw0n'
+const EMAILJS_PUBLIC_KEY  = 'uQgl5BmKyzS1u6QSB'
 // ─────────────────────────────────────────────────────────────────────────────
 
 const quoteSchema = z.object({
@@ -62,11 +56,12 @@ export default function Contact() {
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          name:    data.name,
-          phone:   data.phone,
-          email:   data.email,
-          service: SERVICE_OPTIONS.find((s) => s.value === data.service)?.label ?? data.service,
-          message: data.message,
+          from_name:  data.name,
+          from_email: data.email,
+          reply_to:   data.email,
+          phone:      data.phone,
+          service:    SERVICE_OPTIONS.find((s) => s.value === data.service)?.label ?? data.service,
+          message:    data.message,
         },
         EMAILJS_PUBLIC_KEY
       )

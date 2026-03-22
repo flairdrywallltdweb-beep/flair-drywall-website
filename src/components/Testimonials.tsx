@@ -60,7 +60,7 @@ export default function Testimonials() {
             Client Stories
           </motion.span>
           <motion.h2
-            className="section-title"
+            className="section-title testimonials__title"
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.08 }}
@@ -156,6 +156,9 @@ export default function Testimonials() {
       </div>
 
       <style>{`
+        .testimonials__title {
+          font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+        }
         .testimonials__wrapper {
           max-width: 1000px;
           margin-inline: auto;
