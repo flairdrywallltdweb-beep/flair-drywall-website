@@ -194,10 +194,10 @@ export default function Gallery() {
       <style>{`
         .gallery__grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          grid-template-columns: 1fr;
           gap: 1.25rem;
         }
-        @media (min-width: 768px)  { .gallery__grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 640px)  { .gallery__grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 1024px) { .gallery__grid { grid-template-columns: repeat(3, 1fr); } }
 
         .gallery__card {
@@ -324,6 +324,11 @@ export default function Gallery() {
           transform: translateX(4px);
           color: #00f2ea;
         }
+        @media (max-width: 480px) {
+          .gallery__tiktok { padding: 1rem; gap: 0.85rem; }
+          .gallery__tiktok-icon { width: 44px; height: 44px; }
+          .gallery__tiktok-handle { font-size: var(--text-base); }
+        }
 
         .gallery__cta {
           display: flex;
@@ -362,7 +367,7 @@ export default function Gallery() {
           background: #000;
         }
         .gallery__lightbox-info {
-          padding: 1.5rem;
+          padding: clamp(1rem, 4vw, 1.5rem);
           display: flex;
           align-items: center;
           gap: 1rem;

@@ -121,6 +121,9 @@ export default function Process() {
           gap: 2rem;
           position: relative;
         }
+        @media (min-width: 640px) {
+          .process__steps { grid-template-columns: repeat(2, 1fr); }
+        }
         @media (min-width: 1024px) {
           .process__steps { grid-template-columns: repeat(4, 1fr); }
         }
@@ -146,7 +149,7 @@ export default function Process() {
           background: var(--color-bg);
           border: 1px solid var(--color-border);
           border-radius: var(--radius-xl);
-          padding: 2rem 1.5rem;
+          padding: clamp(1.5rem, 3vw, 2rem) clamp(1rem, 3vw, 1.5rem);
           text-align: center;
           box-shadow: var(--shadow-card);
           transition: box-shadow var(--t-base), border-color var(--t-base), transform var(--t-spring);

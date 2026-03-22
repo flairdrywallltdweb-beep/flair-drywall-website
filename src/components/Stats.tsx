@@ -101,13 +101,15 @@ export default function Stats() {
           flex-direction: column;
           align-items: center;
           text-align: center;
-          padding: clamp(2rem, 4vw, 3rem) 2rem;
+          padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem);
           border-right: 1px solid rgba(255,255,255,0.1);
           transition: background var(--t-base);
         }
         .stats__card:last-child { border-right: none; }
         .stats__card:hover { background: rgba(255,255,255,0.05); }
+        @media (max-width: 639px) { .stats__grid { grid-template-columns: 1fr; gap: 0; } }
         @media (max-width: 767px) {
+          .stats__grid { grid-template-columns: 1fr; }
           .stats__card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
           .stats__card:last-child { border-bottom: none; }
         }

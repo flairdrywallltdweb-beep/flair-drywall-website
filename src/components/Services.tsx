@@ -139,6 +139,9 @@ export default function Services() {
         @media (min-width: 640px) {
           .services__grid { grid-template-columns: repeat(2, 1fr); }
         }
+        @media (min-width: 768px) {
+          .services__grid { grid-template-columns: repeat(3, 1fr); }
+        }
         @media (min-width: 1024px) {
           .services__grid { grid-template-columns: repeat(6, 1fr); }
           .service-card:nth-child(1) { grid-column: span 2; }
@@ -160,7 +163,7 @@ export default function Services() {
         }
         .service-card__photo {
           width: 100%;
-          height: 200px;
+          height: clamp(160px, 25vw, 220px);
           overflow: hidden;
           flex-shrink: 0;
         }
@@ -174,7 +177,7 @@ export default function Services() {
           transform: scale(1.05);
         }
         .service-card__body {
-          padding: 2rem;
+          padding: clamp(1.25rem, 3vw, 2rem);
           display: flex;
           flex-direction: column;
           flex: 1;
@@ -223,7 +226,7 @@ export default function Services() {
           margin-bottom: 1.5rem;
         }
         .service-card__highlights li {
-          font-size: 0.78rem;
+          font-size: clamp(0.78rem, 2vw, 0.85rem);
           font-weight: 600;
           color: var(--color-primary);
           background: var(--color-bg-alt);

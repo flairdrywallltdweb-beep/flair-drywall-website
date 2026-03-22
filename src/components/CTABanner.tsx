@@ -125,7 +125,7 @@ export default function CTABanner() {
         }
         .cta-banner__trust {
           display: flex;
-          gap: 2rem;
+          gap: clamp(1rem, 4vw, 2rem);
           flex-wrap: wrap;
           justify-content: center;
         }

@@ -288,7 +288,8 @@ export default function Navbar() {
           display: inline-flex;
           align-items: center;
           gap: 0.4rem;
-          padding: 0.55rem 1.2rem;
+          padding: 0.65rem 1.2rem;
+          min-height: 44px;
           background: #0EA5E9;
           color: #fff;
           font-size: 0.85rem;
@@ -312,7 +313,7 @@ export default function Navbar() {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 40px; height: 40px;
+          width: 44px; height: 44px;
           border-radius: 8px;
           color: #1E3A5F;
           background: none;
@@ -340,7 +341,8 @@ export default function Navbar() {
         }
         .nav-mobile-link {
           display: block;
-          padding: 0.7rem 1rem;
+          padding: 0.9rem 1rem;
+          min-height: 44px;
           font-size: 1rem;
           font-weight: 500;
           color: #4A6080;

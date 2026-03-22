@@ -325,14 +325,14 @@ export default function Contact() {
           grid-template-columns: 1fr;
           gap: 1.25rem;
         }
-        @media (min-width: 640px) { .contact__row { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 768px) { .contact__row { grid-template-columns: 1fr 1fr; } }
         .contact__field {
           display: flex;
           flex-direction: column;
           gap: 0.4rem;
         }
         .contact__field label {
-          font-size: 0.875rem;
+          font-size: clamp(0.875rem, 2vw, 1rem);
           font-weight: 600;
           color: var(--color-deep);
         }
@@ -340,6 +340,7 @@ export default function Contact() {
         .contact__field select,
         .contact__field textarea {
           padding: 0.75rem 1rem;
+          min-height: 44px;
           border: 1.5px solid var(--color-border);
           border-radius: var(--radius-md);
           font-family: var(--font-body);

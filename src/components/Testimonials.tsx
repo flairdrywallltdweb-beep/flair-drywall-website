@@ -162,15 +162,12 @@ export default function Testimonials() {
         }
         .testimonials__cards {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: 1fr;
           gap: 1.25rem;
           align-items: center;
           padding-block: 2.5rem;
         }
         @media (max-width: 767px) {
-          .testimonials__cards {
-            grid-template-columns: 1fr;
-          }
           .testimonials__card:not(.testimonials__card--active) {
             display: none;
           }
@@ -179,11 +176,14 @@ export default function Testimonials() {
           .testimonials__cards { grid-template-columns: repeat(2, 1fr); }
           /* Hide second inactive card on tablet */
         }
+        @media (min-width: 1024px) {
+          .testimonials__cards { grid-template-columns: repeat(3, 1fr); }
+        }
         .testimonials__card {
           background: var(--color-bg);
           border: 1px solid var(--color-border);
           border-radius: var(--radius-xl);
-          padding: 2rem;
+          padding: clamp(1.25rem, 3vw, 2rem);
           display: flex;
           flex-direction: column;
           gap: 1.25rem;
@@ -280,6 +280,8 @@ export default function Testimonials() {
         .testimonials__dot {
           width: 8px;
           height: 8px;
+          padding: 8px;
+          margin: -8px;
           border-radius: var(--radius-full);
           background: var(--color-border);
           transition: background var(--t-base), transform var(--t-spring);

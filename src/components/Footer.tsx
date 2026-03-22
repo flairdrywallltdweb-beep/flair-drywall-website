@@ -170,8 +170,8 @@ export default function Footer() {
           gap: 0.75rem;
         }
         .footer__social-link {
-          width: 40px;
-          height: 40px;
+          width: 44px;
+          height: 44px;
           border-radius: var(--radius-full);
           background: rgba(255,255,255,0.08);
           border: 1px solid rgba(255,255,255,0.12);

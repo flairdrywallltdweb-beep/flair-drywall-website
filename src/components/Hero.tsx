@@ -260,7 +260,7 @@ export default function Hero() {
         .hero__stats {
           display: flex;
           flex-direction: row;
-          gap: 1rem;
+          gap: clamp(0.75rem, 3vw, 1.5rem);
           flex-wrap: wrap;
         }
         @media (min-width: 1024px) {
@@ -279,7 +279,7 @@ export default function Hero() {
           background: rgba(255,255,255,0.06);
           border: 1px solid rgba(255,255,255,0.10);
           backdrop-filter: blur(6px);
-          min-width: 120px;
+          min-width: 0;
           transition: background 0.2s ease;
         }
         .hero__stat:hover { background: rgba(255,255,255,0.10); }
