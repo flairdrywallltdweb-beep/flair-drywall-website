@@ -220,6 +220,7 @@ export default function Navbar() {
           will-change: height;
         }
 
+
         /* ── Logo ── */
         .nav-logo {
           display: flex;

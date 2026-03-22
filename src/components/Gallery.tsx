@@ -1,18 +1,17 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Camera, X, ZoomIn } from 'lucide-react'
+import { X, ZoomIn } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
 import { staggerContainer, fadeInUp } from '@/lib/motionVariants'
 
-// TODO: Replace placeholder cards with real <img> tags when client provides photos.
-// Each item should include: src (image URL), alt (descriptive alt text), title (project name), location (city in Alberta).
-const GALLERY_ITEMS = Array.from({ length: 9 }, (_, i) => ({
-  id: i + 1,
-  title: ['Basement Development', 'New Build Install', 'Commercial Office', 'Luxury Home', 'Kitchen Reno', 'Spray Foam Insulation', 'Texture Finish', 'Garage Drywall', 'Condo Renovation'][i],
-  location: ['Calgary, AB', 'Edmonton, AB', 'Red Deer, AB', 'Lethbridge, AB', 'Calgary, AB', 'Edmonton, AB', 'Airdrie, AB', 'Cochrane, AB', 'Calgary, AB'][i],
-  category: ['Drywall', 'Drywall', 'Commercial', 'Drywall', 'Taping', 'Insulation', 'Texture', 'Drywall', 'Renovation'][i],
-  // When real images are available: src: '/gallery/project-1.jpg'
-}))
+const GALLERY_ITEMS = [
+  { id: 1, src: '/Drywall.jpg',      title: 'Drywall Installation', location: 'Alberta, AB', category: 'Drywall' },
+  { id: 2, src: '/drywall-2.jpg',    title: 'Drywall Finishing',    location: 'Alberta, AB', category: 'Drywall' },
+  { id: 3, src: '/Insulation.JPG',   title: 'Insulation Install',   location: 'Alberta, AB', category: 'Insulation' },
+  { id: 4, src: '/Spray-foam.JPG',   title: 'Spray Foam Project',   location: 'Alberta, AB', category: 'Spray Foam' },
+  { id: 5, src: '/Mud_Tapping.jpeg', title: 'Mud Taping Finish',    location: 'Alberta, AB', category: 'Taping' },
+  { id: 6, src: '/Texture.JPG',      title: 'Texture Finishing',    location: 'Alberta, AB', category: 'Texture' },
+]
 
 export default function Gallery() {
   const { ref, inView } = useInView<HTMLElement>({ threshold: 0.08 })
@@ -76,10 +75,7 @@ export default function Gallery() {
               aria-label={`View project: ${item.title}`}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openLightbox(idx) }}
             >
-              {/* Placeholder background — remove when real images added */}
-              <div className="gallery__placeholder" aria-hidden="true">
-                <Camera size={36} />
-              </div>
+              <img src={item.src} alt={item.title} className="gallery__img" loading="lazy" />
 
               {/* Hover overlay */}
               <div className="gallery__overlay">
@@ -130,11 +126,7 @@ export default function Gallery() {
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Placeholder in lightbox — replace with <img> when photos available */}
-              <div className="gallery__lightbox-img" aria-hidden="true">
-                <Camera size={64} />
-                <p>Photo coming soon</p>
-              </div>
+              <img src={current.src} alt={current.title} className="gallery__lightbox-img" />
               <div className="gallery__lightbox-info">
                 <h3>{current.title}</h3>
                 <p>{current.location}</p>
@@ -167,15 +159,15 @@ export default function Gallery() {
           aspect-ratio: 4/3;
           box-shadow: var(--shadow-card);
         }
-        .gallery__placeholder {
+        .gallery__img {
           width: 100%;
           height: 100%;
-          background: var(--grad-cta);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: rgba(255,255,255,0.3);
+          object-fit: cover;
+          object-position: center;
+          transition: transform 0.5s ease;
+          display: block;
         }
+        .gallery__card:hover .gallery__img { transform: scale(1.06); }
         .gallery__overlay {
           position: absolute;
           inset: 0;
@@ -241,16 +233,11 @@ export default function Gallery() {
           box-shadow: var(--shadow-xl);
         }
         .gallery__lightbox-img {
-          aspect-ratio: 16/9;
-          background: var(--grad-cta);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 0.75rem;
-          color: rgba(255,255,255,0.35);
+          width: 100%;
+          aspect-ratio: 4/3;
+          object-fit: cover;
+          display: block;
         }
-        .gallery__lightbox-img p { font-size: var(--text-sm); }
         .gallery__lightbox-info {
           padding: 1.5rem;
           display: flex;

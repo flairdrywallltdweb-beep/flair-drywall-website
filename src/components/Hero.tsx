@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ChevronDown, CheckCircle2 } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { heroEntrance, fadeInUp } from '@/lib/motionVariants'
 
 const handleScroll = (id: string) => (e: React.MouseEvent) => {
@@ -16,10 +16,19 @@ const HERO_FEATURES = [
 export default function Hero() {
   return (
     <section id="home" className="hero" aria-label="Drywall installation and finishing services in Alberta">
-      {/* Background — structural geometric design */}
+      {/* Background — video with dark overlay */}
       <div className="hero__bg" aria-hidden="true">
-        <div className="hero__bg-grid" />
-        <div className="hero__bg-diagonal" />
+        <video
+          className="hero__video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        >
+          <source src="/IMG_7762.mp4" type="video/mp4" />
+        </video>
+        <div className="hero__overlay" />
         <div className="hero__bg-glow" />
       </div>
 
@@ -97,16 +106,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.button
-        className="hero__scroll-btn"
-        onClick={handleScroll('stats')}
-        aria-label="Scroll to next section"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <ChevronDown size={22} />
-      </motion.button>
 
       <style>{`
         .hero {
@@ -121,30 +120,28 @@ export default function Hero() {
         .hero__bg {
           position: absolute;
           inset: 0;
-          background: linear-gradient(150deg, #0C1929 0%, #1E3A5F 45%, #1a4a80 75%, #0c3060 100%);
           z-index: 0;
+          background: #0C1929;
         }
-        /* Subtle structural grid — suggests precision/craftsmanship */
-        .hero__bg-grid {
+        .hero__video {
           position: absolute;
           inset: 0;
-          background-image:
-            repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 0, transparent 80px),
-            repeating-linear-gradient(0deg,  rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 0, transparent 80px);
-          background-size: 80px 80px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
         }
-        /* Diagonal block — breaks the flat gradient, adds dimension */
-        .hero__bg-diagonal {
+        /* Dark overlay — ensures text is always readable */
+        .hero__overlay {
           position: absolute;
           inset: 0;
-          background: rgba(14,165,233,0.055);
-          clip-path: polygon(55% 0%, 100% 0%, 100% 100%, 35% 100%);
+          background: linear-gradient(150deg, rgba(12,25,41,0.82) 0%, rgba(30,58,95,0.65) 50%, rgba(12,48,96,0.72) 100%);
         }
-        /* Soft glow accent */
+        /* Soft accent glow */
         .hero__bg-glow {
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse 50% 60% at 75% 40%, rgba(14,165,233,0.18) 0%, transparent 65%);
+          background: radial-gradient(ellipse 50% 60% at 75% 40%, rgba(14,165,233,0.12) 0%, transparent 65%);
         }
 
         /* ── Container ── */

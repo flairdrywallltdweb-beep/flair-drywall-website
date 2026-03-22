@@ -78,7 +78,7 @@ export default function Stats() {
       <style>{`
         .stats {
           padding-block: clamp(3.5rem, 6vw, 5rem);
-          background: var(--grad-stats);
+          background: linear-gradient(180deg, #0c3060 0%, #1E3A5F 40%, #1D4ED8 100%);
           position: relative;
           overflow: hidden;
         }

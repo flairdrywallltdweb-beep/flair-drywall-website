@@ -8,6 +8,7 @@ interface Service {
   title: string
   description: string
   highlights: string[]
+  photo: string | null
 }
 
 const SERVICES: Service[] = [
@@ -17,6 +18,7 @@ const SERVICES: Service[] = [
     description:
       'Precision drywall installation for new construction and renovations. We handle everything from framing to a flawless finished wall.',
     highlights: ['Residential & Commercial', 'New Construction', 'Renovations'],
+    photo: '/Drywall.jpg',
   },
   {
     icon: Thermometer,
@@ -24,6 +26,7 @@ const SERVICES: Service[] = [
     description:
       'Energy-efficient insulation solutions that keep Alberta homes warm in winter and cool in summer, reducing your energy bills year-round.',
     highlights: ['Batt & Blown-In', 'Energy Efficient', 'Soundproofing'],
+    photo: '/Insulation.JPG',
   },
   {
     icon: Droplets,
@@ -31,6 +34,7 @@ const SERVICES: Service[] = [
     description:
       'High-performance spray foam insulation that creates an airtight seal, preventing heat loss and moisture infiltration in walls and attics.',
     highlights: ['Open & Closed Cell', 'Airtight Seal', 'Moisture Barrier'],
+    photo: '/Spray-foam.JPG',
   },
   {
     icon: Paintbrush2,
@@ -38,6 +42,7 @@ const SERVICES: Service[] = [
     description:
       'Expert taping and mudding that creates invisible seams and a perfectly smooth surface ready for paint — no waves, no cracks.',
     highlights: ['Level 4 & 5 Finish', 'Crack-Free', 'Paint Ready'],
+    photo: '/Mud_Tapping.jpeg',
   },
   {
     icon: Sparkles,
@@ -45,6 +50,7 @@ const SERVICES: Service[] = [
     description:
       'From orange peel to knockdown, smooth skim coat to Venetian plaster — we bring walls to life with professional texture finishes.',
     highlights: ['Orange Peel', 'Knockdown', 'Smooth Finish'],
+    photo: '/Texture.JPG',
   },
 ]
 
@@ -90,13 +96,19 @@ export default function Services() {
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
         >
-          {SERVICES.map(({ icon: Icon, title, description, highlights }) => (
+          {SERVICES.map(({ icon: Icon, title, description, highlights, photo }) => (
             <motion.div
               key={title}
               className="service-card"
               variants={fadeInUp}
               whileHover={{ y: -8, transition: { type: 'spring', stiffness: 380, damping: 26 } }}
             >
+              {photo && (
+                <div className="service-card__photo">
+                  <img src={photo} alt={title} loading="lazy" />
+                </div>
+              )}
+              <div className="service-card__body">
               <div className="service-card__icon" aria-hidden="true">
                 <Icon size={26} />
               </div>
@@ -112,6 +124,7 @@ export default function Services() {
               <a href="#contact" className="service-card__link" aria-label={`Get a quote for ${title}`}>
                 Get a Quote <ArrowRight size={15} />
               </a>
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -120,20 +133,51 @@ export default function Services() {
       <style>{`
         .services__grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          grid-template-columns: 1fr;
           gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+          .services__grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+          .services__grid { grid-template-columns: repeat(6, 1fr); }
+          .service-card:nth-child(1) { grid-column: span 2; }
+          .service-card:nth-child(2) { grid-column: span 2; }
+          .service-card:nth-child(3) { grid-column: span 2; }
+          .service-card:nth-child(4) { grid-column: 2 / 4; }
+          .service-card:nth-child(5) { grid-column: 4 / 6; }
         }
         .service-card {
           background: var(--color-bg);
           border: 1px solid var(--color-border);
           border-radius: var(--radius-xl);
-          padding: 2rem;
           display: flex;
           flex-direction: column;
-          gap: 0;
+          overflow: hidden;
           box-shadow: var(--shadow-card);
           transition: box-shadow var(--t-base), border-color var(--t-base);
           cursor: default;
+        }
+        .service-card__photo {
+          width: 100%;
+          height: 200px;
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+        .service-card__photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+        .service-card:hover .service-card__photo img {
+          transform: scale(1.05);
+        }
+        .service-card__body {
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
         }
         .service-card:hover {
           box-shadow: var(--shadow-card-hov);
@@ -155,6 +199,7 @@ export default function Services() {
           margin-bottom: 1.25rem;
           transition: background var(--t-base), color var(--t-base);
           flex-shrink: 0;
+          margin-top: 0;
         }
         .service-card__title {
           font-family: var(--font-display);
