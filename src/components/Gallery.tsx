@@ -106,6 +106,29 @@ export default function Gallery() {
           ))}
         </motion.div>
 
+        {/* TikTok banner */}
+        <motion.a
+          href="https://www.tiktok.com/@flairdrywallltd"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="gallery__tiktok"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          whileHover={{ scale: 1.02, transition: { type: 'spring', stiffness: 350, damping: 25 } }}
+        >
+          <div className="gallery__tiktok-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.87a8.16 8.16 0 004.77 1.52V6.94a4.85 4.85 0 01-1-.25z"/>
+            </svg>
+          </div>
+          <div className="gallery__tiktok-text">
+            <span className="gallery__tiktok-label">See more of our work</span>
+            <span className="gallery__tiktok-handle">@flairdrywallltd</span>
+          </div>
+          <span className="gallery__tiktok-arrow">→</span>
+        </motion.a>
+
         {/* CTA below grid */}
         <motion.div
           className="gallery__cta"
@@ -250,6 +273,58 @@ export default function Gallery() {
           border-radius: var(--radius-full);
           border: 1px solid rgba(255,255,255,0.2);
         }
+        .gallery__tiktok {
+          display: flex;
+          align-items: center;
+          gap: 1.25rem;
+          margin-top: 2rem;
+          padding: 1.25rem 2rem;
+          background: linear-gradient(135deg, #010101 0%, #1a1a2e 100%);
+          border-radius: var(--radius-xl);
+          border: 1px solid rgba(255,255,255,0.08);
+          text-decoration: none;
+          cursor: pointer;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+        }
+        .gallery__tiktok-icon {
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #ff0050, #00f2ea);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          flex-shrink: 0;
+        }
+        .gallery__tiktok-text {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          flex: 1;
+        }
+        .gallery__tiktok-label {
+          font-size: var(--text-sm);
+          color: rgba(255,255,255,0.6);
+          font-weight: 500;
+        }
+        .gallery__tiktok-handle {
+          font-size: var(--text-lg);
+          font-weight: 700;
+          color: #fff;
+          letter-spacing: -0.01em;
+        }
+        .gallery__tiktok-arrow {
+          font-size: 1.5rem;
+          color: rgba(255,255,255,0.4);
+          transition: transform 0.2s ease, color 0.2s ease;
+          flex-shrink: 0;
+        }
+        .gallery__tiktok:hover .gallery__tiktok-arrow {
+          transform: translateX(4px);
+          color: #00f2ea;
+        }
+
         .gallery__cta {
           display: flex;
           flex-direction: column;
