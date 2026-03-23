@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle2 } from 'lucide-react'
 import { heroEntrance, fadeInUp } from '@/lib/motionVariants'
@@ -19,7 +19,7 @@ export default function Hero() {
 
   // Programmatic play is required on mobile — the autoPlay attribute alone
   // is not reliable on iOS Safari / Android Chrome for background videos.
-  useEffect(() => {
+  useLayoutEffect(() => {
     const v = videoRef.current
     if (!v) return
     v.muted = true
