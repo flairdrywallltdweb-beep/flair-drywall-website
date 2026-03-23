@@ -166,8 +166,8 @@ export default function Footer() {
         }
         .footer__logo-wrap img {
           object-fit: contain;
-          width: clamp(100px, 20vw, 200px);
-          height: clamp(100px, 20vw, 200px);
+          width: clamp(200px, 20vw, 225px);
+          height: clamp(200px, 20vw, 225px);
         }
         .footer__tagline {
           font-size: var(--text-sm);

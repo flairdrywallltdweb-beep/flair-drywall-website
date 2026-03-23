@@ -24,7 +24,7 @@ export default function Hero() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           poster="/drywall-2.jpg"
         >
           <source src="/IMG_7762.mp4" type="video/mp4" />

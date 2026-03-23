@@ -102,8 +102,6 @@ html {
   font-size: 16px;
   overflow-x: hidden;
   max-width: 100%;
-  /* iOS safe area support */
-  padding-top: env(safe-area-inset-top);
 }
 
 body {
