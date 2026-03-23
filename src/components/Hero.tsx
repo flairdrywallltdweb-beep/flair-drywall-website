@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle2 } from 'lucide-react'
 import { heroEntrance, fadeInUp } from '@/lib/motionVariants'
@@ -14,11 +15,23 @@ const HERO_FEATURES = [
 ]
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Programmatic play is required on mobile — the autoPlay attribute alone
+  // is not reliable on iOS Safari / Android Chrome for background videos.
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = true
+    v.play().catch(() => { /* Autoplay blocked — poster shows silently */ })
+  }, [])
+
   return (
     <section id="home" className="hero" aria-label="Drywall installation and finishing services in Alberta">
       {/* Background — video with dark overlay */}
       <div className="hero__bg" aria-hidden="true">
         <video
+          ref={videoRef}
           className="hero__video"
           autoPlay
           muted
