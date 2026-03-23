@@ -5,13 +5,13 @@ import { useInView } from '@/hooks/useInView'
 import { staggerContainer, fadeInUp } from '@/lib/motionVariants'
 
 const GALLERY_ITEMS = [
-  { id: 1, src: '/IMG_7762.mp4',     title: 'Our Work in Action',   location: 'Alberta, AB', category: 'Video',      type: 'video' as const },
-  { id: 2, src: '/Drywall.jpg',      title: 'Drywall Installation', location: 'Alberta, AB', category: 'Drywall',    type: 'image' as const },
-  { id: 3, src: '/drywall-2.jpg',    title: 'Drywall Finishing',    location: 'Alberta, AB', category: 'Drywall',    type: 'image' as const },
-  { id: 4, src: '/Insulation.JPG',   title: 'Insulation Install',   location: 'Alberta, AB', category: 'Insulation', type: 'image' as const },
-  { id: 5, src: '/Spray-foam.JPG',   title: 'Spray Foam Project',   location: 'Alberta, AB', category: 'Spray Foam', type: 'image' as const },
-  { id: 6, src: '/Mud_Tapping.jpeg', title: 'Mud Taping Finish',    location: 'Alberta, AB', category: 'Taping',     type: 'image' as const },
-  { id: 7, src: '/Texture.JPG',      title: 'Texture Finishing',    location: 'Alberta, AB', category: 'Texture',    type: 'image' as const },
+  { id: 1, src: '/IMG_7762.mp4',     title: 'Flair Drywall crew at work on a residential project in Alberta',              location: 'Alberta, AB', category: 'Video',      type: 'video' as const },
+  { id: 2, src: '/Drywall.jpg',      title: 'Drywall installation in progress — residential project, Alberta',             location: 'Alberta, AB', category: 'Drywall',    type: 'image' as const },
+  { id: 3, src: '/drywall-2.jpg',    title: 'Completed drywall finishing with clean Level 4 surface, Alberta',             location: 'Alberta, AB', category: 'Drywall',    type: 'image' as const },
+  { id: 4, src: '/Insulation.JPG',   title: 'Insulation installation between wall studs for energy efficiency, Alberta',   location: 'Alberta, AB', category: 'Insulation', type: 'image' as const },
+  { id: 5, src: '/Spray-foam.JPG',   title: 'Closed-cell spray foam insulation applied to exterior wall cavity, Alberta',  location: 'Alberta, AB', category: 'Spray Foam', type: 'image' as const },
+  { id: 6, src: '/Mud_Tapping.jpeg', title: 'Professional mud taping and finishing — crack-free seams, Alberta',           location: 'Alberta, AB', category: 'Taping',     type: 'image' as const },
+  { id: 7, src: '/Texture.JPG',      title: 'Texture finishing on ceiling — consistent smooth texture, Alberta',           location: 'Alberta, AB', category: 'Texture',    type: 'image' as const },
 ]
 
 export default function Gallery() {
