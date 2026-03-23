@@ -140,16 +140,21 @@ export default function Footer() {
         }
         .footer__grid {
           display: grid;
-          grid-template-columns: 1fr;
+          /* Mobile: 2 columns so Quick Links + Services sit side by side */
+          grid-template-columns: 1fr 1fr;
           gap: clamp(1.75rem, 4vw, 2.5rem);
           padding-bottom: clamp(2.5rem, 5vw, 4rem);
           border-bottom: 1px solid rgba(255,255,255,0.1);
           position: relative;
           z-index: 1;
         }
-        @media (min-width: 640px)  { .footer__grid { grid-template-columns: repeat(2, 1fr); } }
+        /* Brand and Contact span both columns on mobile */
+        .footer__brand   { grid-column: 1 / -1; }
+        .footer__contact { grid-column: 1 / -1; }
         @media (min-width: 1024px) {
           .footer__grid { grid-template-columns: 2.5fr 1fr 1fr 1.5fr; }
+          .footer__brand   { grid-column: auto; }
+          .footer__contact { grid-column: auto; }
           .footer__nav,
           .footer__services,
           .footer__contact { padding-top: 3.5rem; }
