@@ -77,7 +77,7 @@ export default function Gallery() {
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openLightbox(idx) }}
             >
               {item.type === 'video' ? (
-                <video className="gallery__img" muted playsInline preload="metadata">
+                <video className="gallery__img" muted playsInline preload="metadata" poster="/drywall-2.jpg">
                   <source src={item.src} type="video/mp4" />
                 </video>
               ) : (
@@ -244,7 +244,7 @@ export default function Gallery() {
           background: var(--grad-card);
           display: flex;
           align-items: flex-end;
-          padding: 1.5rem;
+          padding: clamp(1rem, 3vw, 1.5rem);
           opacity: 0;
           transition: opacity var(--t-base);
         }
@@ -276,7 +276,7 @@ export default function Gallery() {
         .gallery__tiktok {
           display: flex;
           align-items: center;
-          gap: 1.25rem;
+          gap: clamp(0.75rem, 2.5vw, 1.25rem);
           margin-top: 2rem;
           padding: 1.25rem 2rem;
           background: linear-gradient(135deg, #010101 0%, #1a1a2e 100%);

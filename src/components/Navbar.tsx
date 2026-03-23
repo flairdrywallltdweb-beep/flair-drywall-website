@@ -201,6 +201,8 @@ export default function Navbar() {
           background: #fff;
           border-bottom: 1px solid #E8EEF6;
           will-change: transform;
+          /* iOS notch / Dynamic Island safe area */
+          padding-top: env(safe-area-inset-top);
         }
 
         /* Shadow fades in via MotionValue opacity — no CSS transition needed */
@@ -252,6 +254,9 @@ export default function Navbar() {
 
         .nav-link {
           padding: 0.45rem 0.8rem;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
           font-size: 1.125rem;
           font-weight: 500;
           color: #4A6080;

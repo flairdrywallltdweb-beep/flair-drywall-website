@@ -132,7 +132,7 @@ export default function WhyUs() {
         }
         .whyus__point {
           display: flex;
-          gap: 1rem;
+          gap: clamp(0.75rem, 2vw, 1rem);
           align-items: flex-start;
         }
         .whyus__point-icon {

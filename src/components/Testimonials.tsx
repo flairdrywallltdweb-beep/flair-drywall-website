@@ -36,29 +36,27 @@ const TESTIMONIALS = [
     name: 'Emmanuel G.',
     role: 'Property Owner, Calgary, AB',
     rating: 5,
-    text: 'The texture finishing on my living room walls looks incredible. Simple, clean, and consistent all the way through — exactly what I asked for. These guys really listen and deliver. The quote was fair, the work was expert, and the cleanup was thorough. Couldn\'t be happier.',
+    text: 'The texture finishing on my living room ceiling looks incredible. Simple, clean, and consistent all the way through — exactly what I asked for. These guys really listen and deliver. The quote was fair, the work was expert, and the cleanup was thorough. Couldn\'t be happier.',
     initial: 'E',
   },
   {
     name: 'Scout Copper',
-    role: 'Homeowner, Airdrie, AB',
+    role: 'Commercial Development Manager, Calgary, AB',
     rating: 5,
     text: 'I\'ve brought Flair Drywall onto multiple jobs now and they never disappoint. Always on time, always clean, and the craftsmanship speaks for itself. Their pricing is very reasonable for the quality you get. Reliable, expert team — exactly what you want on a job site.',
     initial: 'S',
   },
 ]
 
-const PER_VIEW_DESKTOP = 3
-const PER_VIEW_TABLET  = 2
-const PER_VIEW_MOBILE  = 1
+const TOTAL = TESTIMONIALS.length
 
 function usePerView() {
-  const [perView, setPerView] = useState(PER_VIEW_DESKTOP)
+  const [perView, setPerView] = useState(3)
   useEffect(() => {
     const update = () => {
-      if (window.innerWidth < 640)  setPerView(PER_VIEW_MOBILE)
-      else if (window.innerWidth < 1024) setPerView(PER_VIEW_TABLET)
-      else setPerView(PER_VIEW_DESKTOP)
+      if (window.innerWidth < 640) setPerView(1)
+      else if (window.innerWidth < 1024) setPerView(2)
+      else setPerView(3)
     }
     update()
     window.addEventListener('resize', update)
@@ -69,19 +67,21 @@ function usePerView() {
 
 export default function Testimonials() {
   const { ref, inView } = useInView<HTMLElement>({ threshold: 0.1 })
-  const perView   = usePerView()
-  const maxIndex  = TESTIMONIALS.length - perView
+  const perView  = usePerView()
+  const maxIndex = TOTAL - perView
   const [index, setIndex]     = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const trackRef = useRef<HTMLDivElement>(null)
 
-  // Clamp index when perView changes on resize
+  // Swipe tracking
+  const touchStartX = useRef<number | null>(null)
+
+  // Clamp on resize
   useEffect(() => {
-    setIndex((i) => Math.min(i, TESTIMONIALS.length - perView))
+    setIndex((i) => Math.min(i, TOTAL - perView))
   }, [perView])
 
-  const prev = useCallback(() => setIndex((i) => Math.max(i - 1, 0)), [])
-  const next = useCallback(() => setIndex((i) => Math.min(i + 1, maxIndex)), [maxIndex])
+  const prev = useCallback(() => setIndex((i) => (i <= 0 ? maxIndex : i - 1)), [maxIndex])
+  const next = useCallback(() => setIndex((i) => (i >= maxIndex ? 0 : i + 1)), [maxIndex])
 
   // Auto-advance
   useEffect(() => {
@@ -92,12 +92,31 @@ export default function Testimonials() {
     return () => clearInterval(id)
   }, [isPaused, inView, maxIndex])
 
+  // Touch handlers
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    setIsPaused(true)
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const delta = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(delta) > 40) {
+      delta > 0 ? next() : prev()
+    }
+    touchStartX.current = null
+    setIsPaused(false)
+  }
+
+  // Correct math:
+  // Track box-width = parent width (block element, no explicit width)
+  // Each card = (100/perView)% of parent
+  // translateX % is relative to element's OWN box width = parent width
+  // So to move 1 card = -(100/perView)% of parent ✓
   const translateX = -(index * (100 / perView))
 
   return (
     <section id="testimonials" className="section" ref={ref} aria-label="Customer testimonials">
       <div className="container">
-        {/* Header */}
         <div className="section-header section-header--center">
           <motion.span
             className="section-label"
@@ -117,7 +136,6 @@ export default function Testimonials() {
           </motion.h2>
         </div>
 
-        {/* Carousel */}
         <motion.div
           className="tc__root"
           initial={{ opacity: 0, y: 30 }}
@@ -126,22 +144,26 @@ export default function Testimonials() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Viewport */}
-          <div className="tc__viewport">
+          {/* Viewport — clips the track */}
+          <div
+            className="tc__viewport"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            {/* Track — all cards in a row, no gap (padding inside cards instead) */}
             <div
-              ref={trackRef}
               className="tc__track"
               style={{ transform: `translateX(${translateX}%)` }}
             >
               {TESTIMONIALS.map((t) => (
                 <div
                   key={t.name}
-                  className="tc__card"
-                  style={{ flex: `0 0 calc(${100 / perView}% - ${(perView - 1) * 20 / perView}px)` }}
+                  className="tc__slide"
+                  style={{ flex: `0 0 ${100 / perView}%` }}
                 >
-                  <div className="tc__card-inner">
+                  <div className="tc__card">
                     <div className="tc__quote-icon" aria-hidden="true">
-                      <Quote size={28} />
+                      <Quote size={26} />
                     </div>
                     <div className="tc__stars" aria-label={`${t.rating} out of 5 stars`}>
                       {Array.from({ length: t.rating }).map((_, i) => (
@@ -166,7 +188,6 @@ export default function Testimonials() {
           <button
             className="tc__arrow tc__arrow--prev"
             onClick={prev}
-            disabled={index === 0}
             aria-label="Previous testimonials"
           >
             <ChevronLeft size={22} />
@@ -174,7 +195,6 @@ export default function Testimonials() {
           <button
             className="tc__arrow tc__arrow--next"
             onClick={next}
-            disabled={index >= maxIndex}
             aria-label="Next testimonials"
           >
             <ChevronRight size={22} />
@@ -199,39 +219,42 @@ export default function Testimonials() {
       <style>{`
         .tc__root {
           position: relative;
-          padding: 0 3rem;
+          /* Arrow buttons sit outside viewport, so give horizontal room */
+          padding: 0 clamp(2rem, 5vw, 3rem);
         }
-        @media (max-width: 639px) { .tc__root { padding: 0 2.5rem; } }
 
+        /* Clips overflowing cards */
         .tc__viewport {
           overflow: hidden;
-          border-radius: var(--radius-xl);
         }
 
+        /* All cards in one horizontal line — no CSS gap (avoids math mismatch) */
         .tc__track {
           display: flex;
-          gap: 20px;
           transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           padding-block: 1.5rem;
+          will-change: transform;
+        }
+
+        /* Each slide = 1/perView of viewport; padding creates visual gap */
+        .tc__slide {
+          flex-shrink: 0;
+          padding-inline: clamp(0.35rem, 1vw, 0.6rem);
         }
 
         .tc__card {
-          flex-shrink: 0;
-        }
-
-        .tc__card-inner {
           background: var(--color-bg);
           border: 1px solid var(--color-border);
           border-radius: var(--radius-xl);
-          padding: clamp(1.5rem, 3vw, 2rem);
+          padding: clamp(1.25rem, 3vw, 1.75rem);
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 0.85rem;
           box-shadow: var(--shadow-card);
           height: 100%;
           transition: box-shadow var(--t-base), border-color var(--t-base), transform var(--t-spring);
         }
-        .tc__card-inner:hover {
+        .tc__card:hover {
           box-shadow: var(--shadow-card-hov);
           border-color: rgba(37,99,235,0.22);
           transform: translateY(-4px);
@@ -239,7 +262,7 @@ export default function Testimonials() {
 
         .tc__quote-icon {
           color: var(--color-primary);
-          opacity: 0.25;
+          opacity: 0.2;
           line-height: 1;
         }
 
@@ -261,23 +284,23 @@ export default function Testimonials() {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          margin-top: auto;
-          padding-top: 1rem;
+          padding-top: 0.85rem;
           border-top: 1px solid var(--color-border);
+          margin-top: auto;
         }
 
         .tc__avatar {
-          width: 42px;
-          height: 42px;
+          width: 40px;
+          height: 40px;
+          min-width: 40px;
           border-radius: var(--radius-full);
           background: var(--grad-accent);
           display: flex;
           align-items: center;
           justify-content: center;
           font-weight: 800;
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           color: #fff;
-          flex-shrink: 0;
         }
 
         .tc__name {
@@ -294,7 +317,7 @@ export default function Testimonials() {
           margin-top: 1px;
         }
 
-        /* Arrows */
+        /* Arrow buttons — 44px touch target */
         .tc__arrow {
           position: absolute;
           top: 50%;
@@ -311,6 +334,7 @@ export default function Testimonials() {
           box-shadow: var(--shadow-card);
           transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast), opacity var(--t-fast);
           z-index: 2;
+          flex-shrink: 0;
         }
         .tc__arrow--prev { left: 0; }
         .tc__arrow--next { right: 0; }
@@ -319,30 +343,38 @@ export default function Testimonials() {
           border-color: var(--color-primary);
           color: #fff;
         }
-        .tc__arrow:disabled {
-          opacity: 0.3;
-          cursor: not-allowed;
-        }
 
-        /* Dots */
+        /* Dots — padded to 44px tall tap area */
         .tc__dots {
           display: flex;
           justify-content: center;
-          gap: 0.5rem;
-          margin-top: 1.5rem;
+          align-items: center;
+          gap: 0.35rem;
+          margin-top: 1.25rem;
+          padding: 0.75rem 0; /* extends tap area height */
         }
         .tc__dot {
           width: 8px;
           height: 8px;
           border-radius: var(--radius-full);
           background: var(--color-border);
+          /* padding expands the tap target to ~44px without affecting visual size */
+          padding: 10px;
+          margin: -10px;
           transition: background var(--t-base), width var(--t-spring);
           cursor: pointer;
-          padding: 0;
+          /* Override the padding-trick visual — keep dot small */
+          background-clip: content-box;
+          border: 10px solid transparent;
         }
         .tc__dot--active {
-          background: var(--color-primary);
+          background-color: var(--color-primary);
           width: 24px;
+        }
+
+        @media (max-width: 639px) {
+          .tc__root { padding: 0 clamp(1.75rem, 5vw, 2.5rem); }
+          .tc__card { padding: 1.25rem; }
         }
       `}</style>
     </section>

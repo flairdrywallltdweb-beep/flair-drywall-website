@@ -369,6 +369,7 @@ export default function Contact() {
           width: 100%;
           justify-content: center;
           padding: 0.9rem;
+          min-height: 48px;
           font-size: var(--text-base);
           margin-top: 0.25rem;
         }

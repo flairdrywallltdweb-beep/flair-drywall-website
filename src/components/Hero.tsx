@@ -225,6 +225,7 @@ export default function Hero() {
           justify-content: center;
           gap: 0.5rem;
           padding: 0.9rem 2rem;
+          min-height: 48px;
           font-family: var(--font-body);
           font-size: var(--text-base);
           font-weight: 700;
@@ -235,6 +236,7 @@ export default function Hero() {
           text-decoration: none;
           transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, background 0.15s ease, border-color 0.15s ease;
           white-space: nowrap;
+          touch-action: manipulation;
         }
         .hero__btn--primary {
           background: var(--color-accent);

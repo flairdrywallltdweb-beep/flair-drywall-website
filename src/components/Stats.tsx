@@ -114,8 +114,8 @@ export default function Stats() {
           .stats__card:last-child { border-bottom: none; }
         }
         .stats__icon {
-          width: 64px;
-          height: 64px;
+          width: clamp(48px, 8vw, 64px);
+          height: clamp(48px, 8vw, 64px);
           border-radius: var(--radius-full);
           background: rgba(255,255,255,0.12);
           display: flex;

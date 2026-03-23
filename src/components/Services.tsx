@@ -191,8 +191,8 @@ export default function Services() {
           color: #fff;
         }
         .service-card__icon {
-          width: 56px;
-          height: 56px;
+          width: clamp(44px, 7vw, 56px);
+          height: clamp(44px, 7vw, 56px);
           border-radius: var(--radius-lg);
           background: var(--color-bg-alt);
           color: var(--color-primary);
@@ -249,6 +249,9 @@ export default function Services() {
           color: var(--color-primary);
           transition: gap var(--t-spring), color var(--t-fast);
           margin-top: auto;
+          min-height: 44px;
+          padding-top: 0.5rem;
+          touch-action: manipulation;
         }
         .service-card__link:hover {
           color: var(--color-accent);

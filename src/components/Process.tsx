@@ -118,7 +118,7 @@ export default function Process() {
         .process__steps {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 2rem;
+          gap: clamp(1.25rem, 3vw, 2rem);
           position: relative;
         }
         @media (min-width: 640px) {
@@ -173,14 +173,14 @@ export default function Process() {
           justify-content: center;
         }
         .process__number {
-          font-size: 0.7rem;
+          font-size: 0.75rem;
           font-weight: 800;
           color: #fff;
           letter-spacing: 0.04em;
         }
         .process__icon {
-          width: 64px;
-          height: 64px;
+          width: clamp(48px, 8vw, 64px);
+          height: clamp(48px, 8vw, 64px);
           border-radius: var(--radius-full);
           background: var(--color-bg-alt);
           color: var(--color-primary);

@@ -141,7 +141,7 @@ export default function Footer() {
         .footer__grid {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 2.5rem;
+          gap: clamp(1.75rem, 4vw, 2.5rem);
           padding-bottom: clamp(2.5rem, 5vw, 4rem);
           border-bottom: 1px solid rgba(255,255,255,0.1);
           position: relative;
@@ -166,14 +166,8 @@ export default function Footer() {
         }
         .footer__logo-wrap img {
           object-fit: contain;
-          width: 120px;
-          height: 120px;
-        }
-        @media (min-width: 640px) {
-          .footer__logo-wrap img { width: 160px; height: 160px; }
-        }
-        @media (min-width: 1024px) {
-          .footer__logo-wrap img { width: 225px; height: 225px; }
+          width: clamp(100px, 20vw, 200px);
+          height: clamp(100px, 20vw, 200px);
         }
         .footer__tagline {
           font-size: var(--text-sm);
@@ -191,6 +185,7 @@ export default function Footer() {
           align-items: center;
           gap: 0.55rem;
           padding: 0.6rem 1.25rem;
+          min-height: 44px;
           background: #000;
           color: #fff;
           border-radius: var(--radius-full);
