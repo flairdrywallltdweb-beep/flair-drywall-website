@@ -168,6 +168,7 @@ export default function Gallery() {
                   className="gallery__lightbox-img"
                   controls
                   autoPlay
+                  muted
                   playsInline
                   key={current.src}
                 >
