@@ -26,7 +26,7 @@ const STEPS = [
     number: '04',
     icon: CheckCircle2,
     title: 'Quality Inspection',
-    description: 'We conduct a thorough walkthrough with you to ensure every detail meets our high standards before we call it complete.',
+    description: 'We go through everything top to bottom, making sure every detail is held to our highest standards before we call it complete.',
   },
 ]
 

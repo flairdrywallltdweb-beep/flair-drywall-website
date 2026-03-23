@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion'
-import { ShieldCheck, Award, MapPin, Clock, CheckCircle2, Quote } from 'lucide-react'
+import { ShieldCheck, Award, MapPin, Clock, CheckCircle2, Quote, HardHat } from 'lucide-react'
 import { useInView } from '@/hooks/useInView'
 import { slideInLeft, slideInRight, staggerContainer, fadeInUp } from '@/lib/motionVariants'
 
 const TRUST_POINTS = [
   {
     icon: ShieldCheck,
-    title: 'Licensed & Insured',
-    description: 'Fully licensed and insured for your peace of mind on every project.',
+    title: 'Licensed',
+    description: 'Fully licensed for your peace of mind on every project.',
   },
   {
     icon: Award,
@@ -23,6 +23,11 @@ const TRUST_POINTS = [
     icon: Clock,
     title: '10+ Years Experience',
     description: 'Over a decade of proven expertise in residential and commercial projects.',
+  },
+  {
+    icon: HardHat,
+    title: 'Safety First, Always',
+    description: 'Clean job sites, professional conduct, and full safety standards maintained on every single project.',
   },
 ]
 
@@ -91,8 +96,8 @@ export default function WhyUs() {
               <h3 className="whyus__card-title">Our Promise to You</h3>
               <p className="whyus__card-text">
                 "Every project receives our full attention and commitment.
-                We treat your home or business like our own, ensuring every
-                detail is perfect before we consider the job complete."
+                We make sure everything is held to our highest standards —
+                every detail, every time — before we consider the job complete."
               </p>
               <ul className="whyus__guarantees" aria-label="Our guarantees">
                 {GUARANTEES.map((g) => (

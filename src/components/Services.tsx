@@ -16,8 +16,8 @@ const SERVICES: Service[] = [
     icon: Layers,
     title: 'Drywall Installation',
     description:
-      'Precision drywall installation for new construction and renovations. We handle everything from framing to a flawless finished wall.',
-    highlights: ['Residential & Commercial', 'New Construction', 'Renovations'],
+      'Precision drywall installation for base development and renovations. We handle everything from framing to a flawless finished wall.',
+    highlights: ['Residential & Commercial', 'Base Development', 'Renovations'],
     photo: '/Drywall.jpg',
   },
   {
@@ -25,7 +25,7 @@ const SERVICES: Service[] = [
     title: 'Insulation',
     description:
       'Energy-efficient insulation solutions that keep Alberta homes warm in winter and cool in summer, reducing your energy bills year-round.',
-    highlights: ['Batt & Blown-In', 'Energy Efficient', 'Soundproofing'],
+    highlights: ['Soundproofing', 'Energy Efficient'],
     photo: '/Insulation.JPG',
   },
   {
@@ -33,7 +33,7 @@ const SERVICES: Service[] = [
     title: 'Spray Foam',
     description:
       'High-performance spray foam insulation that creates an airtight seal, preventing heat loss and moisture infiltration in walls and attics.',
-    highlights: ['Open & Closed Cell', 'Airtight Seal', 'Moisture Barrier'],
+    highlights: ['Airtight Seal', 'Open & Closed Cell'],
     photo: '/Spray-foam.JPG',
   },
   {
@@ -48,8 +48,8 @@ const SERVICES: Service[] = [
     icon: Sparkles,
     title: 'Texture Finishing',
     description:
-      'From orange peel to knockdown, smooth skim coat to Venetian plaster — we bring walls to life with professional texture finishes.',
-    highlights: ['Orange Peel', 'Knockdown', 'Smooth Finish'],
+      'Clean, simple texture finishes that give your walls a professional look — applied with care and consistency on every project.',
+    highlights: ['Simple Texture', 'Consistent Finish'],
     photo: '/Texture.JPG',
   },
 ]

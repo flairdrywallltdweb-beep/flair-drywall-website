@@ -20,7 +20,7 @@ const quoteSchema = z.object({
   email:   z.string().email('Please enter a valid email address'),
   service: z.enum(
     ['drywall-installation', 'insulation', 'spray-foam', 'mud-taping', 'texture-finishing', 'other'],
-    { required_error: 'Please select a service' }
+    { errorMap: () => ({ message: 'Please select a service' }) }
   ),
   message: z.string().min(10, 'Please provide more detail (at least 10 characters)').max(1000, 'Message is too long'),
 })
@@ -275,7 +275,7 @@ export default function Contact() {
                 {[
                   '10+ Years in Alberta',
                   'Free, No-Obligation Estimates',
-                  'Licensed & Insured',
+                  'Licensed',
                   'Residential & Commercial',
                   '100% Satisfaction Guarantee',
                 ].map((badge) => (
