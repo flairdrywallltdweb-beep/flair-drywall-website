@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle2 } from 'lucide-react'
 import { heroEntrance, fadeInUp } from '@/lib/motionVariants'
@@ -14,18 +15,38 @@ const HERO_FEATURES = [
 ]
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Pause video decode when hero scrolls out of view.
+  // Raw 4K iPhone video decodes at ~150MB/s GPU bandwidth continuously.
+  // When offscreen this competes with scroll compositing for every section
+  // below the hero — and causes thermal throttling on laptops after ~30s.
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { entry.isIntersecting ? video.play().catch(() => {}) : video.pause() },
+      { threshold: 0 }
+    )
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <section id="home" className="hero" aria-label="Drywall installation and finishing services in Alberta">
       {/* Background — video with dark overlay */}
       <div className="hero__bg" aria-hidden="true">
         <video
           className="hero__video"
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
           preload="metadata"
           poster="/drywall-2.jpg"
+          width="1920"
+          height="1080"
         >
           <source src="/IMG_7762.mp4" type="video/mp4" />
         </video>
@@ -116,6 +137,15 @@ export default function Hero() {
           display: flex;
           align-items: center;
           overflow: hidden;
+          /* Isolates layout/paint from the rest of the page so the browser
+             doesn't re-check document layout when the video decodes new frames.
+             Also ensures the compositor can scroll sections below independently
+             without involving the main thread for the hero's clip calculation. */
+          contain: layout paint;
+          isolation: isolate;
+          /* Allow vertical scroll only — eliminates 300ms touch delay on Android
+             and prevents accidental horizontal gesture triggering repaints. */
+          touch-action: pan-y;
         }
         /* ── Background layers ── */
         .hero__bg {
@@ -137,12 +167,21 @@ export default function Hero() {
           position: absolute;
           inset: 0;
           background: linear-gradient(150deg, rgba(12,25,41,0.82) 0%, rgba(30,58,95,0.65) 50%, rgba(12,48,96,0.72) 100%);
+          /* Promote to own GPU layer — without this, the static gradient sits on the
+             same paint layer as the video and gets recomposited on every video frame
+             (~30fps). With will-change the gradient is rasterized once as a GPU
+             texture and only composited, never repainted. */
+          will-change: transform;
+          pointer-events: none;
         }
         /* Soft accent glow */
         .hero__bg-glow {
           position: absolute;
           inset: 0;
           background: radial-gradient(ellipse 50% 60% at 75% 40%, rgba(14,165,233,0.12) 0%, transparent 65%);
+          /* Same reason as overlay — static layer promoted once, composited cheaply. */
+          will-change: transform;
+          pointer-events: none;
         }
 
         /* ── Container ── */
@@ -234,7 +273,10 @@ export default function Hero() {
           letter-spacing: 0.02em;
           cursor: pointer;
           text-decoration: none;
-          transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, background 0.15s ease, border-color 0.15s ease;
+          /* box-shadow removed from transition — it triggers a paint operation.
+             On touch devices the scroll-start gesture can trigger :hover causing
+             a box-shadow paint at the exact moment the browser is initialising scroll. */
+          transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.15s ease, border-color 0.15s ease;
           white-space: nowrap;
           touch-action: manipulation;
         }
@@ -257,6 +299,12 @@ export default function Hero() {
           background: rgba(255,255,255,0.08);
           border-color: rgba(255,255,255,0.8);
           transform: translateY(-3px);
+        }
+        /* Disable all hover transitions on touch devices — scroll-start touch
+           can trigger :hover on whatever the finger lands on, firing a box-shadow
+           repaint at the exact frame the browser needs to initialise scroll. */
+        @media (hover: none) {
+          .hero__btn { transition: none; }
         }
 
         /* ── Stats sidebar ── */
@@ -282,6 +330,7 @@ export default function Hero() {
           background: rgba(255,255,255,0.06);
           border: 1px solid rgba(255,255,255,0.10);
           backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
           min-width: 0;
           transition: background 0.2s ease;
         }
@@ -293,6 +342,13 @@ export default function Hero() {
             border-left: 3px solid rgba(255,255,255,0.15);
             background: transparent;
             padding: 0.9rem 1.25rem;
+            /* Critical desktop fix: backdrop-filter was never cleared here,
+               leaving active GPU blur over the live video on desktop.
+               On desktop the stats use a transparent bg anyway, so the blur
+               served no visual purpose — but it was still forcing the GPU
+               to re-sample video pixels on every decoded frame (~30fps). */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
           }
           .hero__stat:hover { background: transparent; border-left-color: var(--color-accent); }
         }
